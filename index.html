@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tomaselcyklar</title>
+  <link rel="stylesheet" href="storefront.css">
+</head>
+<body>
+  <header>Tomas elcyklar.</header>
+
+  <main>
+    <img class="bike" src="stad-MMM.jpg" width="1280" height="864" alt="Olivgrön Stad MMM med breda däck">
+    <section aria-labelledby="model">
+      <h1 id="model">Stad MMM</h1>
+      <p class="color">Olivgrön</p>
+      <p>Elcykel med breda däck, framdämpning och pakethållare.</p>
+      <p class="price">24&nbsp;995&nbsp;kr</p>
+      <button id="buy" type="button">Gör ett testköp</button>
+
+      <h2>Specifikationer</h2>
+      <dl>
+        <div><dt>Batteri</dt><dd>625 Wh</dd></div>
+        <div><dt>Motor</dt><dd>250 W</dd></div>
+        <div><dt>Vridmoment</dt><dd>75 Nm</dd></div>
+        <div><dt>Räckvidd</dt><dd>Upp till 85 km</dd></div>
+        <div><dt>Vikt</dt><dd>29 kg</dd></div>
+        <div><dt>Däck</dt><dd>26 × 4 tum</dd></div>
+        <div><dt>Ramstorlek</dt><dd>M</dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <dialog id="checkout" aria-labelledby="checkout-title">
+    <form method="dialog">
+      <h2 id="checkout-title">Kassa</h2>
+      <p>1 × Stad MMM</p>
+      <p class="price">24&nbsp;995&nbsp;kr</p>
+      <div class="actions">
+        <button value="confirm">Bekräfta testköp</button>
+        <button class="secondary" value="cancel" autofocus>Avbryt</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmation" aria-labelledby="confirmation-title">
+    <form method="dialog">
+      <h2 id="confirmation-title">Tack för ditt testköp!</h2>
+      <button>Tillbaka till butiken</button>
+    </form>
+  </dialog>
+
+  <script>
+    const checkout = document.querySelector("#checkout");
+    const confirmation = document.querySelector("#confirmation");
+
+    document.querySelector("#buy").addEventListener("click", () => {
+      checkout.returnValue = "";
+      checkout.showModal();
+    });
+
+    checkout.addEventListener("close", () => {
+      if (checkout.returnValue === "confirm") confirmation.showModal();
+    });
+  </script>
+</body>
+</html>
