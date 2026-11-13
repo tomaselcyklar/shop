@@ -12,7 +12,20 @@
   </header>
 
   <main>
-    <img class="bike" src="Stad-MMM.jpg" width="1280" height="864" alt="Olivgrön Stad MMM med breda däck">
+    <div class="bike-column">
+      <img class="bike" src="stad-MMM.jpg" width="1280" height="864" alt="Olivgrön Stad MMM med breda däck">
+
+      <section id="demo-consent" aria-labelledby="consent-heading">
+        <h2 id="consent-heading">Mätning av testköp</h2>
+        <p>Vill du tillåta mätning av dina testköp? Ingen annonsmätning är ansluten ännu.</p>
+        <div class="actions">
+          <button type="button" id="consent-accept">Tillåt mätning</button>
+          <button type="button" id="consent-reject">Neka mätning</button>
+        </div>
+        <p id="consent-status" role="status"></p>
+        <button type="button" id="consent-reset" class="consent-reset">Återställ för test</button>
+      </section>
+    </div>
     <section aria-labelledby="model">
       <h1 id="model">Stad MMM</h1>
       <p class="color">Olivgrön</p>
@@ -32,20 +45,6 @@
       </dl>
     </section>
   </main>
-
-  <section id="demo-consent" aria-labelledby="consent-heading">
-    <h2 id="consent-heading">Samtycke till mätning</h2>
-    <p>
-      Tillåter du mätning av dina testköp? Du kan ändra ditt val när som helst.
-      Ingen annonsmätning är ansluten ännu.
-    </p>
-    <div class="actions">
-      <button type="button" id="consent-accept">Godkänn mätning</button>
-      <button type="button" id="consent-reject">Neka mätning</button>
-      <button type="button" id="consent-reset">Återställ för test</button>
-    </div>
-    <p id="consent-status" role="status"></p>
-  </section>
 
   <dialog id="checkout" aria-labelledby="checkout-title">
     <form method="dialog">
