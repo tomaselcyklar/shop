@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="storefront.css">
 </head>
 <body>
-  <header>Tomas elcyklar.</header>
+  <header>
+    <span class="logo">Tomas elcyklar.</span>
+  </header>
 
   <main>
-    <img class="bike" src="stad-MMM.jpg" width="1280" height="864" alt="Olivgrön Stad MMM med breda däck">
+    <img class="bike" src="Stad-MMM.jpg" width="1280" height="864" alt="Olivgrön Stad MMM med breda däck">
     <section aria-labelledby="model">
       <h1 id="model">Stad MMM</h1>
       <p class="color">Olivgrön</p>
@@ -30,6 +32,20 @@
       </dl>
     </section>
   </main>
+
+  <section id="demo-consent" aria-labelledby="consent-heading">
+    <h2 id="consent-heading">Samtycke till mätning</h2>
+    <p>
+      Tillåter du mätning av dina testköp? Du kan ändra ditt val när som helst.
+      Ingen annonsmätning är ansluten ännu.
+    </p>
+    <div class="actions">
+      <button type="button" id="consent-accept">Godkänn mätning</button>
+      <button type="button" id="consent-reject">Neka mätning</button>
+      <button type="button" id="consent-reset">Återställ för test</button>
+    </div>
+    <p id="consent-status" role="status"></p>
+  </section>
 
   <dialog id="checkout" aria-labelledby="checkout-title">
     <form method="dialog">
@@ -62,6 +78,83 @@
     checkout.addEventListener("close", () => {
       if (checkout.returnValue === "confirm") confirmation.showModal();
     });
+  </script>
+  <script>
+    (() => {
+      const scope = location.pathname
+        .replace(/\/index\.html$/i, "")
+        .replace(/\/$/, "") || "/";
+      const key = "tomaselcyklar:measurement-consent:v1:" + scope;
+      const status = document.querySelector("#consent-status");
+      const labels = {
+        unset: "Samtycke: inte valt. Mätning är inte tillåten.",
+        granted: "Samtycke: godkänt. Mätning är tillåten.",
+        denied: "Samtycke: nekat. Mätning är inte tillåten."
+      };
+
+      let choice = "unset";
+      let storageFailed = false;
+
+      function readChoice() {
+        storageFailed = false;
+        try {
+          const saved = localStorage.getItem(key);
+          choice = saved === "granted" || saved === "denied" ? saved : "unset";
+        } catch {
+          choice = "unset";
+          storageFailed = true;
+        }
+      }
+
+      function getState() {
+        return { choice, measurement: choice === "granted" };
+      }
+
+      function update() {
+        status.textContent = labels[choice] + (storageFailed
+          ? " Valet kan inte sparas. Kontrollera det efter omladdning."
+          : "");
+
+        document.dispatchEvent(new CustomEvent("store:consent-changed", {
+          detail: getState()
+        }));
+      }
+
+      function saveChoice(value) {
+        choice = value;
+        storageFailed = false;
+        try {
+          if (value === "unset") localStorage.removeItem(key);
+          else localStorage.setItem(key, value);
+        } catch {
+          storageFailed = true;
+          try { localStorage.removeItem(key); } catch {}
+        }
+        update();
+      }
+
+      readChoice();
+      window.storeConsent = Object.freeze({
+        getState,
+        isGranted: () => choice === "granted"
+      });
+
+      document.querySelector("#consent-accept")
+        .addEventListener("click", () => saveChoice("granted"));
+      document.querySelector("#consent-reject")
+        .addEventListener("click", () => saveChoice("denied"));
+      document.querySelector("#consent-reset")
+        .addEventListener("click", () => saveChoice("unset"));
+
+      window.addEventListener("storage", event => {
+        if (event.key === key || event.key === null) {
+          readChoice();
+          update();
+        }
+      });
+
+      update();
+    })();
   </script>
 </body>
 </html>
