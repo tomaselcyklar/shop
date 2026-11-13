@@ -9,7 +9,7 @@ body {
   font: 16px/1.5 "DM Sans", system-ui, sans-serif;
 }
 
-header, main {
+header, main, #demo-consent {
   width: min(1080px, calc(100% - 36px));
   margin-inline: auto;
 }
@@ -19,6 +19,16 @@ header {
   border-bottom: 1px solid #dcded2;
   font-size: 1.35rem;
   font-weight: 700;
+}
+
+.logo {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #3f5136;
+  color: #fffef8;
+  line-height: 1.2;
+  letter-spacing: -.025em;
 }
 
 main {
@@ -99,6 +109,19 @@ dialog h2 { margin: 0 0 16px; font-size: 1.4rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .secondary { background: transparent; color: #3f5136; }
 .secondary:hover { background: #e9ecdf; }
+
+#demo-consent {
+  margin-bottom: 32px;
+  padding: 20px;
+  border: 1px solid #dcded2;
+  border-radius: 8px;
+  background: #f5f7f3;
+}
+
+#demo-consent h2 { margin-top: 0; }
+#demo-consent button { background: #fff; color: #3f5136; }
+#demo-consent button:hover { background: #e9ecdf; }
+#consent-status { margin-bottom: 0; }
 
 @media (max-width: 700px) {
   main { grid-template-columns: 1fr; padding-top: 22px; }
