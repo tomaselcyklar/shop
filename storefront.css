@@ -9,7 +9,7 @@ body {
   font: 16px/1.5 "DM Sans", system-ui, sans-serif;
 }
 
-header, main, #demo-consent {
+header, main {
   width: min(1080px, calc(100% - 36px));
   margin-inline: auto;
 }
@@ -45,6 +45,8 @@ main {
   height: auto;
   border-radius: 8px;
 }
+
+.bike-column { min-width: 0; }
 
 h1 {
   margin: 0;
@@ -111,17 +113,37 @@ dialog h2 { margin: 0 0 16px; font-size: 1.4rem; }
 .secondary:hover { background: #e9ecdf; }
 
 #demo-consent {
-  margin-bottom: 32px;
-  padding: 20px;
-  border: 1px solid #dcded2;
+  max-width: 26rem;
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #788765;
   border-radius: 8px;
-  background: #f5f7f3;
+  background: #dfe8d3;
+  font-size: .9rem;
 }
 
 #demo-consent h2 { margin-top: 0; }
-#demo-consent button { background: #fff; color: #3f5136; }
-#demo-consent button:hover { background: #e9ecdf; }
-#consent-status { margin-bottom: 0; }
+#demo-consent p { margin: 0 0 12px; }
+
+#demo-consent .actions button {
+  flex: 1 1 8rem;
+  min-height: 44px;
+  background: #fffef8;
+  color: #3f5136;
+}
+
+#demo-consent .actions button:hover { background: #edf2e7; }
+#demo-consent #consent-status { margin: 12px 0 0; }
+
+#demo-consent .consent-reset {
+  min-height: 36px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: #3f5136;
+  text-decoration: underline;
+  text-underline-offset: .15em;
+}
 
 @media (max-width: 700px) {
   main { grid-template-columns: 1fr; padding-top: 22px; }
