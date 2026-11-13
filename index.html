@@ -76,9 +76,35 @@
       checkout.showModal();
     });
 
-    checkout.addEventListener("close", () => {
-      if (checkout.returnValue === "confirm") confirmation.showModal();
+checkout.addEventListener("close", () => {
+  if (checkout.returnValue !== "confirm") return;
+
+  checkout.returnValue = "";
+  confirmation.showModal();
+
+  try {
+    const purchase = Object.freeze({
+      orderId: "test-" + crypto.randomUUID(),
+      amount: 2499500,
+      currency: "SEK",
+      consentGranted: Boolean(
+        window.storeConsent &&
+        typeof window.storeConsent.isGranted === "function" &&
+        window.storeConsent.isGranted() === true
+      )
     });
+
+    checkout.dispatchEvent(new CustomEvent("store:purchase-completed", {
+      detail: purchase,
+      bubbles: true
+    }));
+
+    console.log("[Tomas E.C.] Test purchase completed:", purchase);
+  } catch (error) {
+    console.error("[Tomas E.C.] Purchase tracking preparation failed", error);
+  }
+});
+    
   </script>
   <script>
     (() => {
